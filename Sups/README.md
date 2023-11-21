@@ -63,11 +63,13 @@ The json data include the following fields
 
 ``` json
 {
-  "Port": "/dev/usb/hiddev0",
-  "Charge": 100,
-  "ACPresent": true,
-  "Time": 32,
-  "ChargerStatus": "Charged"
+    "Port": "/dev/usb/hiddev0", 
+    "Charge": 100,
+    "ACPresent": true,
+    "Time": 40,
+    "ChargerStatus": "Charged",
+    "ShutdownThreshold": 50,
+    "Monitoring": false
 }
 ```
 
