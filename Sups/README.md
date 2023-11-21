@@ -12,7 +12,7 @@ There are a few options
 
 You can find the executable binary in the last release of the github repo. 
 
-https://github.com/kastaniotis/sups/releases
+https://github.com/kastaniotis/Sups/releases
 
 Just untar it and move it to the /usr/local/bin folder so that it is in your path
 
