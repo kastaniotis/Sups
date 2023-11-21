@@ -48,7 +48,7 @@ If you want to define your own dev files, you can do it with the --port argument
 ``` 
 sudo Sups --port /dev/usb/hiddev1
 ```
-<img width="244" alt="image" src="https://github.com/kastaniotis/sups/assets/1822122/88838d11-0be9-4794-8a43-a5401a806fff">
+![image](https://github.com/kastaniotis/Sups/assets/1822122/06eb1e6f-92e3-4ff5-803d-78c194633e14)
 
 If you want the output in json, you can use the --json argument
 
@@ -57,7 +57,7 @@ Or if you have cloned the repo, you can use "dotnet run" to execute the app in d
 ``` bash
 sudo Sups --json
 ```
-<img width="609" alt="image" src="https://github.com/kastaniotis/sups/assets/1822122/60d14614-b5c6-475b-b9f7-d1c915796b0f">
+![image](https://github.com/kastaniotis/Sups/assets/1822122/53c72a82-0082-4457-aaab-11503a059a7e)
 
 The json data include the following fields
 
