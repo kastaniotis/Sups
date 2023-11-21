@@ -17,8 +17,8 @@ https://github.com/kastaniotis/sups/releases
 Just untar it and move it to the /usr/local/bin folder so that it is in your path
 
 ``` bash
-tar -xvzf ./sups.tar.gz
-sudo mv ./sups /usr/local/bin
+tar -xvzf ./Sups.tar.gz
+sudo mv ./Sups /usr/local/bin
 ```
 
 ### Compilation
@@ -36,7 +36,7 @@ There is a script that does it for you and copies the binary in your path
 You might need root permissions to run the application, depending on the ownership of the dev file. 
 
 ``` bash
-sudo sups
+sudo Sups
 ```
 
 The response takes a couple of seconds, since the info is broadcasted from the device to the HID interface at random intervals (we are not doing any IOCTL stuff). 
@@ -46,7 +46,7 @@ The application tries to detect any HID compatible devices, and tries to connect
 If you want to define your own dev files, you can do it with the --port argument.
 
 ``` 
-sudo sups --port /dev/usb/hiddev1
+sudo Sups --port /dev/usb/hiddev1
 ```
 <img width="244" alt="image" src="https://github.com/kastaniotis/sups/assets/1822122/88838d11-0be9-4794-8a43-a5401a806fff">
 
@@ -55,7 +55,7 @@ If you want the output in json, you can use the --json argument
 Or if you have cloned the repo, you can use "dotnet run" to execute the app in debug mode
 
 ``` bash
-sudo sups --json
+sudo Sups --json
 ```
 <img width="609" alt="image" src="https://github.com/kastaniotis/sups/assets/1822122/60d14614-b5c6-475b-b9f7-d1c915796b0f">
 
