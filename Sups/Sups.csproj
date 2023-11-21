@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <!--PublishSingleFile>true</PublishSingleFile-->
+        <SelfContained>true</SelfContained>
+        <PublishRelease>true</PublishRelease>
+        <!--PublishTrimmed>true</PublishTrimmed-->
+        <PublishReadyToRun>true</PublishReadyToRun>
+        <PublishAot>true</PublishAot>
+        <RootNamespace>Iconic.Sups</RootNamespace>
+        <LangVersion>11</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Iconic.Core" Version="1.0.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="public\" />
+    </ItemGroup>
+
+</Project>
