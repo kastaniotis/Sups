@@ -1,4 +1,4 @@
-namespace Sups;
+namespace Iconic.Sups;
 
 public struct HidBatteryChargerStatus
 {

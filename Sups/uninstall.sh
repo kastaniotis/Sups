@@ -1,3 +1,3 @@
 #!/bin/bash
-sudo rm /usr/local/bin/sups
+sudo rm /usr/local/bin/Sups
 

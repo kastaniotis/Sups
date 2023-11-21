@@ -11,8 +11,8 @@
         <!--PublishTrimmed>true</PublishTrimmed-->
         <PublishReadyToRun>true</PublishReadyToRun>
         <PublishAot>true</PublishAot>
-        <RootNamespace>Iconic.Sups</RootNamespace>
         <LangVersion>11</LangVersion>
+        <RootNamespace>Iconic.Sups</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

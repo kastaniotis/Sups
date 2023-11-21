@@ -1,4 +1,4 @@
-namespace Sups.HID;
+namespace Iconic.Sups.HID;
 
 public struct HidBatteryUsages
 {

@@ -1,4 +1,4 @@
-namespace Sups.Sensor;
+namespace Iconic.Sups.Sensor;
 
 public interface ISensor
 {

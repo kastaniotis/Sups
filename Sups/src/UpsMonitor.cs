@@ -1,24 +1,25 @@
+using System.Diagnostics;
 using Iconic.Console;
+using Iconic.Sups.Sensor;
 
-namespace Sups;
+namespace Iconic.Sups;
 
 public class UpsMonitor
 {
     public bool Debug { get; set; }
-    public bool Help { get; set; }
-    public bool Json { get; set; }
-    public string Port { get; set; } = "";
-    public bool Monitoring { get; set; }
-    public int ShutdownThreshold { get; set; } = 50;
+    public bool Json { get; }
+    public string Port { get; } = "";
+    public bool Monitoring { get; }
+    public int ShutdownThreshold { get; } = 50;
+    public Snapshot Data { get; set; }
 
     public UpsMonitor(string[] args)
     {
         Debug = Arguments.Include(args, "--debug");
         
         if(Arguments.Include(args, "--help")){
-            Console.WriteLine(@"
-Syntax:
-
+            System.Console.WriteLine(@"
+Syntax: 
 $: sups
 
 The UPS device must by HID compliant
@@ -31,7 +32,6 @@ Options are:
 --monitoring            to enable shutting down the local machine if charge goes below the threshold (default 50%)
 --threshold 30          to define a custom shutdown threshold (in %)
 ");
-            Console.WriteLine("");
             Environment.Exit(1);
         }
 
@@ -66,7 +66,6 @@ Options are:
             }
         }
         
-
         var thresholdResult = Arguments.GetIntValueResult(args, "--threshold");
         if(thresholdResult is { Success: true, Data: not null })
         {
@@ -74,19 +73,50 @@ Options are:
         }
     }
     
-    public static string ChargerStatus(bool full, bool discharging, bool charging) {
-            if(full){
+    public string ChargerStatus() {
+            if(Data.Full){
                 return HidBatteryChargerStatus.Charged;
             }
 
-            if (discharging){
+            if (Data.Discharging){
                 return HidBatteryChargerStatus.Discharging;
             }
 
-            if (charging){
+            if (Data.Charging){
                 return HidBatteryChargerStatus.Charging;
             }
 
             return HidBatteryChargerStatus.Check;
+    }
+
+    public void Read()
+    {
+        var sensor = new HidUpsSensor();
+        Data = sensor.Read(Port);
+        Data.Store("Port", Port);
+        Data.Store("Monitoring", Monitoring);
+        Data.Store("ShutdownThreshold", ShutdownThreshold);
+        Data.Store("Status", ChargerStatus());
+    }
+
+    public void Monitor()
+    {
+        if (!Monitoring || Data.Charge >= Data.ShutdownThreshold) return;
+        var process = new Process();
+        process.StartInfo.FileName = "shutdown";
+        process.StartInfo.Arguments = "-h +1 \"SHUTTING DOWN SERVER IN 1 MINUTE. AC POWER IS OFF AND UPS CHARGE IS " + Data.Charge + "%\"";
+        process.Start();
+    }
+
+    public void Display()
+    {
+        if (Json)
+        {
+            Output.WriteJson(Data);
+        }
+        else
+        {
+            Output.WriteTable(Data);
+        }
     }
 }
