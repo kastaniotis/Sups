@@ -4,17 +4,17 @@ namespace Iconic.Sups;
 
 public class Snapshot
 {
-    public int Charge { get; set; }
-    public bool Charging { get; set; }
-    public bool Discharging { get; set; }
-    public bool Full { get; set; }
-    public bool AcPresent { get; set; }
-    public int Time { get; set; }
-    public string Port { get; set; } = "";
-    public bool Monitoring { get; set; }
-    public int ShutdownThreshold { get; set; } 
-    public List<string> Data { get; } = new();
-    public string ChargerStatus { get; set; } = Iconic.Sups.ChargerStatus.Charging;
+    public int Charge { get; private set; }
+    public bool Charging { get; private set; }
+    public bool Discharging { get; private set; }
+    public bool Full { get; private set; }
+    public bool AcPresent { get; private set; }
+    public int Time { get; private set; }
+    public string Port { get; private set; } = "";
+    public bool Monitoring { get; private set; }
+    public int ShutdownThreshold { get; private set; }
+    private List<string> Data { get; } = new();
+    public string ChargerStatus { get; private set; } = Status.Charging;
 
     public bool IsComplete()
     {
@@ -64,6 +64,4 @@ public class Snapshot
                 break;
         }
     }
-
-    
 }

@@ -7,11 +7,11 @@ namespace Iconic.Sups;
 public class UpsMonitor
 {
     public bool Debug { get; set; }
-    public bool Json { get; }
-    public string Port { get; } = "";
-    public bool Monitoring { get; }
-    public int ShutdownThreshold { get; } = 50;
-    public Snapshot Data { get; set; } = new();
+    private bool Json { get; }
+    private string Port { get; } = "";
+    private bool Monitoring { get; }
+    private int ShutdownThreshold { get; } = 50;
+    private Snapshot Data { get; set; } = new();
 
     public UpsMonitor(string[] args)
     {
@@ -72,21 +72,21 @@ Options are:
             ShutdownThreshold = (int)thresholdResult.Data;
         }
     }
-    
-    public string ChargerStatus() {
+
+    private string ChargerStatus() {
             if(Data.Full){
-                return Sups.ChargerStatus.Charged;
+                return Status.Full;
             }
 
             if (Data.Discharging){
-                return Sups.ChargerStatus.Discharging;
+                return Status.Discharging;
             }
 
             if (Data.Charging){
-                return Sups.ChargerStatus.Charging;
+                return Status.Charging;
             }
 
-            return Sups.ChargerStatus.Check;
+            return Status.Check;
     }
 
     public void Read()

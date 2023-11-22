@@ -17,7 +17,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Iconic.Core" Version="1.0.6" />
+      <PackageReference Include="Iconic.Core" Version="1.0.7" />
     </ItemGroup>
 
     <ItemGroup>
