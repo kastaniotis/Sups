@@ -84,7 +84,7 @@ You can also use the --debug argument to display extra information about the dat
 You can use the --monitoring argument to enable monitoring of the battery level. The application will shutdown the local machine if the level is below
 the predefined threshold. The default is 50% which is the minimum safe level for Lead Acid batteries.
 
-If you want to define your own threshold, you can the argument --threshold and pass it the new percentage
+If you want to define your own threshold, you can use the argument --threshold and pass it the new percentage
 
 ``` bash
 sudo Sups --monitoring --threshold 30
