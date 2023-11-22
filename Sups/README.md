@@ -155,9 +155,7 @@ https://eleccelerator.com/usbdescreqparser/
 ## TODO
 This is the feature list that I intend to include on v1
 
-- Add support for shutting down the local host at a predefined capacity. 50% is the minimum safe level for Lead Acid batteries, but in my experience most cheap batteries plummet fast. So I will put the default level at something around 30% to give users some reaction time.
 - Add support for shutting down remote hosts. Linux or Windows.
-- The checks will run via cron and not systemd to minimize dependencies and configuration
 
 ## Why C# and not C or C++ or whatever other fancy low level language?
 
