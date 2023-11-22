@@ -13,6 +13,7 @@
         <PublishAot>true</PublishAot>
         <LangVersion>11</LangVersion>
         <RootNamespace>Iconic.Sups</RootNamespace>
+        <AssemblyName>sups</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

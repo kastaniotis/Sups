@@ -1,6 +1,6 @@
-# <img src="https://github.com/kastaniotis/Sups/blob/master/Sups/ups.png" style="width:36px;" valign="middle">sups
+# <img src="https://github.com/kastaniotis/sups/blob/master/sups/ups.png" style="width:36px;" valign="middle">sups
 
-Sups (for simple ups) is a simple application to do quick queries on usb connected UPS devices that support the HID protocols.
+sups (for simple ups) is a simple application to do quick queries on usb connected UPS devices that support the HID protocols.
 
 It is not meant as a replacement for APCUPSD or NUT. 
 
@@ -14,13 +14,13 @@ There are a few options
 
 You can find the executable binary in the last release of the github repo. 
 
-https://github.com/kastaniotis/Sups/releases
+https://github.com/kastaniotis/sups/releases
 
 Just untar it and move it to the /usr/local/bin folder so that it is in your path
 
 ``` bash
-tar -xvzf ./Sups.tar.gz
-sudo mv ./Sups /usr/local/bin
+tar -xvzf ./sups.tar.gz
+sudo mv ./sups /usr/local/bin
 ```
 
 ### Compilation
@@ -38,7 +38,7 @@ There is a script that does it for you and copies the binary in your path
 You might need root permissions to run the application, depending on the ownership of the dev file. 
 
 ``` bash
-sudo Sups
+sudo sups
 ```
 
 The response takes a couple of seconds, since the info is broadcasted from the device to the HID interface at random intervals (we are not doing any IOCTL stuff). 
@@ -48,18 +48,18 @@ The application tries to detect any HID compatible devices, and tries to connect
 If you want to define your own dev files, you can do it with the --port argument.
 
 ``` 
-sudo Sups --port /dev/usb/hiddev1
+sudo sups --port /dev/usb/hiddev1
 ```
-![image](https://github.com/kastaniotis/Sups/assets/1822122/06eb1e6f-92e3-4ff5-803d-78c194633e14)
+![image](https://github.com/kastaniotis/sups/assets/1822122/06eb1e6f-92e3-4ff5-803d-78c194633e14)
 
 If you want the output in json, you can use the --json argument
 
 Or if you have cloned the repo, you can use "dotnet run" to execute the app in debug mode
 
 ``` bash
-sudo Sups --json
+sudo sups --json
 ```
-![image](https://github.com/kastaniotis/Sups/assets/1822122/53c72a82-0082-4457-aaab-11503a059a7e)
+![image](https://github.com/kastaniotis/sups/assets/1822122/53c72a82-0082-4457-aaab-11503a059a7e)
 
 The json data include the following fields
 
@@ -85,7 +85,7 @@ the predefined threshold. The default is 50% which is the minimum safe level for
 If you want to define your own threshold, you can use the argument --threshold and pass it the new percentage
 
 ``` bash
-sudo Sups --monitoring --threshold 30
+sudo sups --monitoring --threshold 30
 ```
 
 The application cannot run as a service, so if you want to automatically shut the machine down, you have to run the app through cron.
@@ -98,7 +98,7 @@ sudo crontab -e
 And add something like the following at the end of the file
 
 ``` bash
-* * * * * Sups --monitoring --threshold 45
+* * * * * sups --monitoring --threshold 45
 ```
 
 The app shuts the machine immediately sending the command below to the system

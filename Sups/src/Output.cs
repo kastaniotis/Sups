@@ -8,7 +8,7 @@ public static class Output
     {
         System.Console.WriteLine($"Port:\t\t{snapshot.Port}");
         Terminal.PrintIntInColor("Charge", Convert.ToInt32(snapshot.Charge), snapshot.ShutdownThreshold, 100, "%");
-        Terminal.PrintState("Charger Status", snapshot.ChargerStatus, HidBatteryChargerStatus.Charged, HidBatteryChargerStatus.Charging, HidBatteryChargerStatus.Discharging);
+        Terminal.PrintState("Charger Status", snapshot.ChargerStatus, ChargerStatus.Charged, ChargerStatus.Charging, ChargerStatus.Discharging);
         Terminal.PrintBoolInColor("AC Present", snapshot.AcPresent, true, false);
         System.Console.WriteLine("Time:\t\t" + snapshot.Time + "'");
         System.Console.WriteLine("Shutdown:\t" + snapshot.ShutdownThreshold + "%");

@@ -1,4 +1,4 @@
 #!/bin/bash
 ./publish.sh
-sudo cp ./public/Sups /usr/local/bin
+sudo cp ./public/sups /usr/local/bin
 

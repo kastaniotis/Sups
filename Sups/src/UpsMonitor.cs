@@ -75,18 +75,18 @@ Options are:
     
     public string ChargerStatus() {
             if(Data.Full){
-                return HidBatteryChargerStatus.Charged;
+                return Sups.ChargerStatus.Charged;
             }
 
             if (Data.Discharging){
-                return HidBatteryChargerStatus.Discharging;
+                return Sups.ChargerStatus.Discharging;
             }
 
             if (Data.Charging){
-                return HidBatteryChargerStatus.Charging;
+                return Sups.ChargerStatus.Charging;
             }
 
-            return HidBatteryChargerStatus.Check;
+            return Sups.ChargerStatus.Check;
     }
 
     public void Read()
@@ -104,7 +104,7 @@ Options are:
         if (!Monitoring || Data.Charge >= Data.ShutdownThreshold) return;
         var process = new Process();
         process.StartInfo.FileName = "shutdown";
-        process.StartInfo.Arguments = "-h +1 \"SHUTTING DOWN SERVER IN 1 MINUTE. AC POWER IS OFF AND UPS CHARGE IS " + Data.Charge + "%\"";
+        process.StartInfo.Arguments = "-h now";
         process.Start();
     }
 

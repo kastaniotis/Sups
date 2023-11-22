@@ -1,6 +1,6 @@
 namespace Iconic.Sups;
 
-public struct HidBatteryChargerStatus
+public struct ChargerStatus
 {
     public const string Charged = "Charged";
     public const string Discharging = "Discharging";

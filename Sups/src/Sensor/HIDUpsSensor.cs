@@ -28,7 +28,6 @@ public class HidUpsSensor : ISensor
         catch (Exception ex)
         {
             Terminal.WriteLineInRed(ex.Message);
-            Terminal.WriteInBlue(ex.StackTrace);
             Environment.Exit(1);
         }
 
