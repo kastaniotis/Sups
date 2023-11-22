@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Iconic.Console;
+using Iconic.Logger;
 using Iconic.Sups.Sensor;
 
 namespace Iconic.Sups;
@@ -7,6 +8,7 @@ namespace Iconic.Sups;
 public class UpsMonitor
 {
     public bool Debug { get; set; }
+    private ILoggingService Logger { get; set; } = new ConsoleLoggingService(false);
     private bool Json { get; }
     private string Port { get; } = "";
     private bool Monitoring { get; }
@@ -16,6 +18,8 @@ public class UpsMonitor
     public UpsMonitor(string[] args)
     {
         Debug = Arguments.Include(args, "--debug");
+        Logger.Enabled = Debug;
+        Logger.Log("Logging is now:", Debug);
         
         if(Arguments.Include(args, "--help")){
             System.Console.WriteLine(@"
@@ -36,17 +40,20 @@ Options are:
         }
 
         Json = Arguments.Include(args, "--json");
-        Monitoring = Arguments.Include(args, "--monitoring");
+        Logger.Log("Json is now:", Json);
         
         // If no port defined, we scan
         if (!Arguments.Include(args, "--port"))
         {
             const string path = "/dev";
+            Logger.Log("No port was specified. Trying to Detect in:", path);
+            
             string?[] devs = Directory.GetFiles(path, "hiddev*", SearchOption.AllDirectories);
             Array.Sort(devs);
             if(devs.Length > 0)
             {
                 Port = devs[0] ?? string.Empty;
+                Logger.Log("Device Found: ", Port);
             }
             else{
                 Terminal.WriteLineInRed($"Could not detect any hiddev devices in {path}. Please use the --port argument.");
@@ -58,6 +65,7 @@ Options are:
             var portResult = Arguments.GetStringValueResult(args, "--port");
             if(portResult.Success){
                 Port = portResult.Data ?? string.Empty;
+                Logger.Log("Port was specified in arguments:", Port);
             }
             else
             {
@@ -66,10 +74,14 @@ Options are:
             }
         }
         
+        Monitoring = Arguments.Include(args, "--monitoring");
+        Logger.Log("Monitoring is now:", Monitoring);
+
         var thresholdResult = Arguments.GetIntValueResult(args, "--threshold");
         if(thresholdResult is { Success: true, Data: not null })
         {
             ShutdownThreshold = (int)thresholdResult.Data;
+            Logger.Log("Shutdown Threshold is specified:", ShutdownThreshold);
         }
     }
 
@@ -91,17 +103,22 @@ Options are:
 
     public void Read()
     {
-        var sensor = new HidUpsSensor();
+        Logger.Log("Trying to read device at", Port);
+        var sensor = new HidUpsSensor(Logger);
         Data = sensor.Read(Port);
         Data.Store("Port", Port);
         Data.Store("Monitoring", Monitoring);
         Data.Store("ShutdownThreshold", ShutdownThreshold);
         Data.Store("Status", ChargerStatus());
+        Logger.Log("Device Status is now", ChargerStatus());
     }
 
     public void Monitor()
     {
+        Logger.Log("Monitoring Battery Level", Monitoring);
+        Logger.Log("Battery Charge Level", $"{Data.Charge} < {Data.ShutdownThreshold}?");
         if (!Monitoring || Data.Charge >= Data.ShutdownThreshold) return;
+        Logger.Log("Shutting down the local machine", string.Empty);
         var process = new Process();
         process.StartInfo.FileName = "shutdown";
         process.StartInfo.Arguments = "-h now";
@@ -112,10 +129,12 @@ Options are:
     {
         if (Json)
         {
+            Logger.Log("Printing Out Json", Data);
             Output.WriteJson(Data);
         }
         else
         {
+            Logger.Log("Printing Out Table", Data);
             Output.WriteTable(Data);
         }
     }
