@@ -79,6 +79,33 @@ The json data include the following fields
 
 You can also use the --debug argument to display extra information about the data received and how they are being parsed.
 
+## Battery Level monitoring
+
+You can use the --monitoring argument to enable monitoring of the battery level. The application will shutdown the local machine if it is below
+the predefined threshold. The default is 50% which is the minimum safe level for Lead Acid batteries.
+
+If you want to define your own threshold, you can define it using the argument --threshold and passing it the new percentage
+
+``` bash
+sudo Sups --monitoring --threshold 30
+```
+
+The application does run as a service, so if you want to automatically shut the machine down, you will have to run the app through cron.
+
+To run it every minute, you should edit root's cron file with
+
+``` bash
+sudo crontab -e
+```
+And add something like the following at the end of the file
+
+``` bash
+* * * * * Sups --monitoring --threshold 45
+```
+
+The app will shutdown the local machine 30 seconds after it detects the low battery condition.
+
+
 ## Supported UPS Devices and HID 
 
 The app uses the HID data transmitted by the UPS. 
