@@ -7,7 +7,7 @@ namespace Iconic.Sups;
 
 public class UpsMonitor
 {
-    public bool Debug { get; set; }
+    private bool Debug { get; set; }
     private ILoggingService Logger { get; set; } = new ConsoleLoggingService(false);
     private bool Json { get; }
     private string Port { get; } = "";
@@ -19,9 +19,10 @@ public class UpsMonitor
     {
         Debug = Arguments.Include(args, "--debug");
         Logger.Enabled = Debug;
-        Logger.Log("Logging is now:", Debug);
-        
-        if(Arguments.Include(args, "--help")){
+        Logger.Log("Logging is now", Debug);
+
+        if (Arguments.Include(args, "--help"))
+        {
             System.Console.WriteLine(@"
 Syntax: 
 $: sups
@@ -40,32 +41,35 @@ Options are:
         }
 
         Json = Arguments.Include(args, "--json");
-        Logger.Log("Json is now:", Json);
-        
+        Logger.Log("Json is now", Json);
+
         // If no port defined, we scan
         if (!Arguments.Include(args, "--port"))
         {
             const string path = "/dev";
-            Logger.Log("No port was specified. Trying to Detect in:", path);
-            
+            Logger.Log("No port was specified. Trying to Detect in", path);
+
             string?[] devs = Directory.GetFiles(path, "hiddev*", SearchOption.AllDirectories);
             Array.Sort(devs);
-            if(devs.Length > 0)
+            if (devs.Length > 0)
             {
                 Port = devs[0] ?? string.Empty;
-                Logger.Log("Device Found: ", Port);
+                Logger.Log("Device Found", Port);
             }
-            else{
-                Terminal.WriteLineInRed($"Could not detect any hiddev devices in {path}. Please use the --port argument.");
+            else
+            {
+                Terminal.WriteLineInRed(
+                    $"Could not detect any hiddev devices in {path}. Please use the --port argument.");
                 Environment.Exit(1);
             }
         }
         else
         {
             var portResult = Arguments.GetStringValueResult(args, "--port");
-            if(portResult.Success){
+            if (portResult.Success)
+            {
                 Port = portResult.Data ?? string.Empty;
-                Logger.Log("Port was specified in arguments:", Port);
+                Logger.Log("Port was specified in arguments", Port);
             }
             else
             {
@@ -73,32 +77,36 @@ Options are:
                 Environment.Exit(1);
             }
         }
-        
+
         Monitoring = Arguments.Include(args, "--monitoring");
-        Logger.Log("Monitoring is now:", Monitoring);
+        Logger.Log("Monitoring is now", Monitoring);
 
         var thresholdResult = Arguments.GetIntValueResult(args, "--threshold");
-        if(thresholdResult is { Success: true, Data: not null })
+        if (thresholdResult is { Success: true, Data: not null })
         {
             ShutdownThreshold = (int)thresholdResult.Data;
-            Logger.Log("Shutdown Threshold is specified:", ShutdownThreshold);
+            Logger.Log("Shutdown Threshold is specified", ShutdownThreshold);
         }
     }
 
-    private string ChargerStatus() {
-            if(Data.Full){
-                return Status.Full;
-            }
+    private string ChargerStatus()
+    {
+        if (Data.Full)
+        {
+            return Status.Full;
+        }
 
-            if (Data.Discharging){
-                return Status.Discharging;
-            }
+        if (Data.Discharging)
+        {
+            return Status.Discharging;
+        }
 
-            if (Data.Charging){
-                return Status.Charging;
-            }
+        if (Data.Charging)
+        {
+            return Status.Charging;
+        }
 
-            return Status.Check;
+        return Status.Check;
     }
 
     public void Read()

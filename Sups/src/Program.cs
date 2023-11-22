@@ -1,5 +1,4 @@
-﻿using Iconic.Logger;
-using Iconic.Sups;
+﻿using Iconic.Sups;
 
 var monitor = new UpsMonitor(args);
 monitor.Read();

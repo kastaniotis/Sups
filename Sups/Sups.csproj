@@ -17,11 +17,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Iconic.Core" Version="1.0.7" />
+      <Folder Include="public\" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="public\" />
+      <ProjectReference Include="..\..\Iconic.Core\Iconic.Core\Iconic.Core.csproj" />
     </ItemGroup>
 
 </Project>

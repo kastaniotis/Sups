@@ -22,19 +22,13 @@ public struct HidBatteryUsages
     private const string AcPresent = "D0";
     public const string AcPresentText = "AcPresent";
 
-    private static bool Ignore(string usage)
-    {
-        return Array.IndexOf(
-            new[] { BelowRemainingCapacityLimit, RemainingTimeLimitExpired, Battery, RemainingTimeLimit },
-            usage) > -1;
-    }
-    
     public static KeyValuePair<string, object> Parse(byte[] buffer)
     {
         //var subject = BitConverter.ToString(buffer[2..3]); // Should always be 85 for HID ups reporting
         var property = BitConverter.ToString(buffer[..1]);
         var value = buffer[4..6];
 
+        // Ignoring BelowRemainingCapacityLimit, RemainingTimeLimitExpired, Battery, RemainingTimeLimit
         return property switch
         {
             Time => new KeyValuePair<string, object>(TimeText, BitConverter.ToInt16(value) / 60), // Convert to Minutes
