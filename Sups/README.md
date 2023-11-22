@@ -194,7 +194,5 @@ The drawback is that there is no easy way to call native low level APIs etc.
 
 I also try not to use idiomatic language structures that make the code difficult to follow. And try to put any frameworks or libraries behind Services that abstract the functionality, making moving to different libraries and frameworks easier.
 
-The application is written using a simple Event Dispatcher. This fits the way the hardware transmits the data in a random way. And makes it easy to plug in new functionality if/when it is required.
-
 ## Acknowledgements
 Icons are courtesy of the [Noun Project](https://thenounproject.com/)
