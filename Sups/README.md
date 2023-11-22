@@ -2,6 +2,10 @@
 
 Sups (for simple ups) is a simple application to do quick queries on usb connected UPS devices that support the HID protocols.
 
+It is not meant as a replacement for APCUPSD or NUT. 
+
+It is meant as an easy to maintain and use alternative that provides the most common functionality required by a UPS.
+
 So far it is only tested with Powerwalker Basic UPSs, and works only on linux
 
 ## Installation
