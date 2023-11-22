@@ -1,4 +1,4 @@
-# <img src="https://github.com/kastaniotis/sups/blob/master/sups/ups.png" style="width:36px;" valign="middle">sups
+# <img src="https://raw.githubusercontent.com/kastaniotis/Sups/master/Sups/ups.png" style="width:36px;" valign="middle">sups
 
 sups (for simple ups) is a simple application to do quick queries on usb connected UPS devices that support the HID protocols.
 
