@@ -81,7 +81,7 @@ You can also use the --debug argument to display extra information about the dat
 
 ## Battery Level monitoring
 
-You can use the --monitoring argument to enable monitoring of the battery level. The application will shutdown the local machine if it is below
+You can use the --monitoring argument to enable monitoring of the battery level. The application will shutdown the local machine if the level is below
 the predefined threshold. The default is 50% which is the minimum safe level for Lead Acid batteries.
 
 If you want to define your own threshold, you can define it using the argument --threshold and passing it the new percentage
