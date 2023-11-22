@@ -11,7 +11,7 @@ public class UpsMonitor
     public string Port { get; } = "";
     public bool Monitoring { get; }
     public int ShutdownThreshold { get; } = 50;
-    public Snapshot Data { get; set; }
+    public Snapshot Data { get; set; } = new();
 
     public UpsMonitor(string[] args)
     {
@@ -46,7 +46,7 @@ Options are:
             Array.Sort(devs);
             if(devs.Length > 0)
             {
-                Port = devs[0];
+                Port = devs[0] ?? string.Empty;
             }
             else{
                 Terminal.WriteLineInRed($"Could not detect any hiddev devices in {path}. Please use the --port argument.");
@@ -57,7 +57,7 @@ Options are:
         {
             var portResult = Arguments.GetStringValueResult(args, "--port");
             if(portResult.Success){
-                Port = portResult.Data;
+                Port = portResult.Data ?? string.Empty;
             }
             else
             {

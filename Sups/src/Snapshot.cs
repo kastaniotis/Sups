@@ -10,11 +10,11 @@ public class Snapshot
     public bool Full { get; set; }
     public bool AcPresent { get; set; }
     public int Time { get; set; }
-    public string Port { get; set; }
+    public string Port { get; set; } = "";
     public bool Monitoring { get; set; }
     public int ShutdownThreshold { get; set; } 
     public List<string> Data { get; } = new();
-    public string ChargerStatus { get; set; }
+    public string ChargerStatus { get; set; } = Iconic.Sups.ChargerStatus.Charging;
 
     public bool IsComplete()
     {
@@ -51,7 +51,7 @@ public class Snapshot
                 Time = (int)value;
                 break;
             case "Port":
-                Port = value.ToString();
+                Port = value.ToString() ?? string.Empty;
                 break;
             case "Monitoring":
                 Monitoring = (bool)value;
@@ -60,7 +60,7 @@ public class Snapshot
                 ShutdownThreshold = (int)value;
                 break;
             case "Status":
-                ChargerStatus = value as string;
+                ChargerStatus = value as string ?? string.Empty;
                 break;
         }
     }
