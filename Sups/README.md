@@ -90,7 +90,7 @@ If you want to define your own threshold, you can use the argument --threshold a
 sudo Sups --monitoring --threshold 30
 ```
 
-The application does run as a service, so if you want to automatically shut the machine down, you will have to run the app through cron.
+The application does not run as a service, so if you want to automatically shut the machine down, you will have to run the app through cron.
 
 To run it every minute, you should edit root's cron file with
 
