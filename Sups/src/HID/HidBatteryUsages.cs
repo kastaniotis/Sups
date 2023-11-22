@@ -7,7 +7,7 @@ public struct HidBatteryUsages
     private const string RemainingTimeLimit = "2A";
     private const string BelowRemainingCapacityLimit = "42";
     private const string RemainingTimeLimitExpired = "43";
-    private const string IgnoredText = "Ignored";
+    public const string IgnoredText = "Ignored";
 
     private const string Charging = "44";
     public const string ChargingText = "Charging";

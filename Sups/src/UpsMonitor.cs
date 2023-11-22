@@ -89,7 +89,7 @@ Options are:
         }
     }
 
-    private string ChargerStatus()
+    public string ChargerStatus()
     {
         if (Data.Full)
         {
