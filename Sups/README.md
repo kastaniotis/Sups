@@ -6,8 +6,6 @@ It is not meant as a replacement for APCUPSD or NUT.
 
 It is meant as an easy to maintain and use alternative that provides the most common functionality required by a UPS.
 
-So far it is only tested with Powerwalker Basic UPSs, and works only on linux
-
 ## Installation
 
 There are a few options
@@ -90,7 +88,7 @@ If you want to define your own threshold, you can use the argument --threshold a
 sudo Sups --monitoring --threshold 30
 ```
 
-The application does not run as a service, so if you want to automatically shut the machine down, you will have to run the app through cron.
+The application cannot run as a service, so if you want to automatically shut the machine down, you have to run the app through cron.
 
 To run it every minute, you should edit root's cron file with
 
@@ -103,12 +101,18 @@ And add something like the following at the end of the file
 * * * * * Sups --monitoring --threshold 45
 ```
 
-The app will shutdown the local machine 30 seconds after it detects the low battery condition.
+The app shuts the machine immediately sending the command below to the system
+
+``` bash
+shutdown -h now
+```
+No delay is defined, since the minimum is 1 minute and this might create race conditions with cron running the command again, resetting the shutdown timer.
 
 
 ## Supported UPS Devices and HID 
 
 The app uses the HID data transmitted by the UPS. 
+So far it is only tested with Powerwalker Basic UPSs, and works only on linux
 
 To find the device, you can use
 
