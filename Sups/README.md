@@ -2,6 +2,10 @@
 
 Sups (for simple ups) is a simple application to do quick queries on usb connected UPS devices that support the HID protocols.
 
+It is not meant as a replacement for APCUPSD or NUT. 
+
+It is meant as an easy to maintain and use alternative that provides the most common functionality required by a UPS.
+
 So far it is only tested with Powerwalker Basic UPSs, and works only on linux
 
 ## Installation
@@ -12,13 +16,13 @@ There are a few options
 
 You can find the executable binary in the last release of the github repo. 
 
-https://github.com/kastaniotis/sups/releases
+https://github.com/kastaniotis/Sups/releases
 
 Just untar it and move it to the /usr/local/bin folder so that it is in your path
 
 ``` bash
-tar -xvzf ./sups.tar.gz
-sudo mv ./sups /usr/local/bin
+tar -xvzf ./Sups.tar.gz
+sudo mv ./Sups /usr/local/bin
 ```
 
 ### Compilation
@@ -36,7 +40,7 @@ There is a script that does it for you and copies the binary in your path
 You might need root permissions to run the application, depending on the ownership of the dev file. 
 
 ``` bash
-sudo sups
+sudo Sups
 ```
 
 The response takes a couple of seconds, since the info is broadcasted from the device to the HID interface at random intervals (we are not doing any IOCTL stuff). 
@@ -46,28 +50,30 @@ The application tries to detect any HID compatible devices, and tries to connect
 If you want to define your own dev files, you can do it with the --port argument.
 
 ``` 
-sudo sups --port /dev/usb/hiddev1
+sudo Sups --port /dev/usb/hiddev1
 ```
-<img width="244" alt="image" src="https://github.com/kastaniotis/sups/assets/1822122/88838d11-0be9-4794-8a43-a5401a806fff">
+![image](https://github.com/kastaniotis/Sups/assets/1822122/06eb1e6f-92e3-4ff5-803d-78c194633e14)
 
 If you want the output in json, you can use the --json argument
 
 Or if you have cloned the repo, you can use "dotnet run" to execute the app in debug mode
 
 ``` bash
-sudo sups --json
+sudo Sups --json
 ```
-<img width="609" alt="image" src="https://github.com/kastaniotis/sups/assets/1822122/60d14614-b5c6-475b-b9f7-d1c915796b0f">
+![image](https://github.com/kastaniotis/Sups/assets/1822122/53c72a82-0082-4457-aaab-11503a059a7e)
 
 The json data include the following fields
 
 ``` json
 {
-  "Port": "/dev/usb/hiddev0",
-  "Charge": 100,
-  "ACPresent": true,
-  "Time": 32,
-  "ChargerStatus": "Charged"
+    "Port": "/dev/usb/hiddev0", 
+    "Charge": 100,
+    "ACPresent": true,
+    "Time": 40,
+    "ChargerStatus": "Charged",
+    "ShutdownThreshold": 50,
+    "Monitoring": false
 }
 ```
 
