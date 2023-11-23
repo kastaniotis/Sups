@@ -1,6 +1,6 @@
 ﻿using Iconic.Sups;
 
 var monitor = new UpsMonitor(args);
-monitor.Read();
-monitor.Display();
-monitor.Monitor();
+var snapshot = monitor.Read();
+monitor.Display(snapshot);
+monitor.Monitor(snapshot);

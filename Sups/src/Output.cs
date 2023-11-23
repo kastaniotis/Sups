@@ -6,6 +6,7 @@ public static class Output
 {
     public static void WriteTable(Snapshot snapshot)
     {
+        System.Console.WriteLine($"Date:\t\t{DateTime.Now:s}");
         System.Console.WriteLine($"Port:\t\t{snapshot.Port}");
         Terminal.PrintIntInColor("Battery:\t", Convert.ToInt32(snapshot.Charge), snapshot.ShutdownThreshold, 100, "%");
         Terminal.PrintState("Status:\t\t", snapshot.ChargerStatus, Status.Full, Status.Charging, Status.Discharging);
@@ -17,7 +18,8 @@ public static class Output
 
     public static void WriteJson(Snapshot snapshot)
     {
-        System.Console.WriteLine(@$"{{
+        System.Console.WriteLine(@$"{{    
+    ""Date"": ""{DateTime.Now:s}"", 
     ""Port"": ""{snapshot.Port}"", 
     ""Charge"": {snapshot.Charge},
     ""ACPresent"": {snapshot.AcPresent.ToString().ToLower()},

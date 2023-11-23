@@ -8,7 +8,7 @@ namespace Iconic.Sups;
 public class UpsMonitor
 {
     private bool Debug { get; set; }
-    private ILoggingService Logger { get; set; } = new ConsoleLoggingService(false);
+    private ILoggingService Logger { get; set; }
     private bool Json { get; }
     private string Port { get; } = "";
     private bool Monitoring { get; }
@@ -18,7 +18,7 @@ public class UpsMonitor
     public UpsMonitor(string[] args)
     {
         Debug = Arguments.Include(args, "--debug");
-        Logger.Enabled = Debug;
+        Logger = new ConsoleLoggingService(Debug);
         Logger.Log("Logging is now", Debug);
 
         if (Arguments.Include(args, "--help"))
@@ -89,19 +89,19 @@ Options are:
         }
     }
 
-    public string ChargerStatus()
+    public string ChargerStatus(Snapshot snapshot)
     {
-        if (Data.Full)
+        if (snapshot.Full)
         {
             return Status.Full;
         }
 
-        if (Data.Discharging)
+        if (snapshot.Discharging)
         {
             return Status.Discharging;
         }
 
-        if (Data.Charging)
+        if (snapshot.Charging)
         {
             return Status.Charging;
         }
@@ -109,7 +109,7 @@ Options are:
         return Status.Check;
     }
 
-    public void Read()
+    public Snapshot Read()
     {
         Logger.Log("Trying to read device at", Port);
         var sensor = new HidUpsSensor(Logger);
@@ -117,33 +117,36 @@ Options are:
         Data.Store("Port", Port);
         Data.Store("Monitoring", Monitoring);
         Data.Store("ShutdownThreshold", ShutdownThreshold);
-        Data.Store("Status", ChargerStatus());
-        Logger.Log("Device Status is now", ChargerStatus());
+        Data.Store("Status", ChargerStatus(Data));
+        Logger.Log("Device Status is now", ChargerStatus(Data));
+        return Data;
     }
 
-    public void Monitor()
+    public void Monitor(Snapshot snapshot)
     {
         Logger.Log("Monitoring Battery Level", Monitoring);
-        Logger.Log("Battery Charge Level", $"{Data.Charge} < {Data.ShutdownThreshold}?");
-        if (!Monitoring || Data.Charge >= Data.ShutdownThreshold) return;
-        Logger.Log("Shutting down the local machine", string.Empty);
-        var process = new Process();
-        process.StartInfo.FileName = "shutdown";
-        process.StartInfo.Arguments = "-h now";
-        process.Start();
+        Logger.Log("Battery Charge Level", $"{snapshot.Charge} < {snapshot.ShutdownThreshold}?");
+        if (Monitoring && !snapshot.AcPresent && snapshot.Charge < snapshot.ShutdownThreshold)
+        {
+            Logger.Log("Shutting down the local machine", string.Empty);
+            var process = new Process();
+            process.StartInfo.FileName = "shutdown";
+            process.StartInfo.Arguments = "-h now";
+            process.Start();
+        }
     }
 
-    public void Display()
+    public void Display(Snapshot snapshot)
     {
         if (Json)
         {
-            Logger.Log("Printing Out Json", Data);
-            Output.WriteJson(Data);
+            Logger.Log("Printing Out Json", snapshot);
+            Output.WriteJson(snapshot);
         }
         else
         {
-            Logger.Log("Printing Out Table", Data);
-            Output.WriteTable(Data);
+            Logger.Log("Printing Out Table", snapshot);
+            Output.WriteTable(snapshot);
         }
     }
 }

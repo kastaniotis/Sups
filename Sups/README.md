@@ -27,6 +27,8 @@ sudo mv ./sups /usr/local/bin
 
 You can clone the repo and compile it with dotnet since the app is written in C#. 
 
+Please note that you will also need clang installed, since the project is configured for Ahead of Time compilation.
+
 There is a script that does it for you and copies the binary in your path
 
 ``` bash
