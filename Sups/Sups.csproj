@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Iconic.Core\Iconic.Core\Iconic.Core.csproj" />
+      <PackageReference Include="Iconic.Core" Version="1.0.10" />
     </ItemGroup>
 
 </Project>
