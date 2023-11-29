@@ -126,7 +126,7 @@ and target machines, with different thresholds.
 **YOU SHOULD NOT MIX LOCAL AND REMOTE MONITORING ON THE SAME CALL**
 
 Ideally, you want separate calls for each device, keeping in mind that your controller machine (local) has to shutdown
-last, so it should have the lower threshold of all devices.
+last, so it should have the lowest threshold of all devices.
 
 For example
 
