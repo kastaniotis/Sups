@@ -120,7 +120,7 @@ the target machine.
 sudo sups --remote-monitoring 192.168.2.100 --threshold 50
 ```
 
-This option gives you great freedom and flexibility. With multiple cron entriels, you cancontrol multiple UPS devices 
+This option gives you great freedom and flexibility. With multiple cron entries, you can control multiple UPS devices 
 and target machines, with different thresholds.
 
 **YOU SHOULD NOT MIX LOCAL AND REMOTE MONITORING ON THE SAME CALL**
