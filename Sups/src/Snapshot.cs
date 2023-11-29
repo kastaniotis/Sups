@@ -11,7 +11,8 @@ public class Snapshot
     public bool AcPresent { get; private set; }
     public int Time { get; private set; }
     public string Port { get; private set; } = "";
-    public bool Monitoring { get; private set; }
+    public bool LocalMonitoring { get; private set; }
+    public string RemoteMonitoring { get; private set; } = string.Empty;
     public int ShutdownThreshold { get; private set; }
     private List<string> Data { get; } = new();
     public string ChargerStatus { get; private set; } = Status.Charging;
@@ -53,8 +54,11 @@ public class Snapshot
             case "Port":
                 Port = value.ToString() ?? string.Empty;
                 break;
-            case "Monitoring":
-                Monitoring = (bool)value;
+            case "LocalMonitoring":
+                LocalMonitoring = (bool)value;
+                break;
+            case "RemoteMonitoring":
+                RemoteMonitoring = value as string ?? string.Empty; 
                 break;
             case "ShutdownThreshold":
                 ShutdownThreshold = (int)value;

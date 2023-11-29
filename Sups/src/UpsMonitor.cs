@@ -11,7 +11,8 @@ public class UpsMonitor
     private ILoggingService Logger { get; set; }
     private bool Json { get; }
     private string Port { get; } = "";
-    private bool Monitoring { get; }
+    private bool LocalMonitoring { get; }
+    private string? RemoteMonitoring { get; }
     private int ShutdownThreshold { get; } = 50;
     private Snapshot Data { get; set; } = new();
 
@@ -78,8 +79,25 @@ Options are:
             }
         }
 
-        Monitoring = Arguments.Include(args, "--monitoring");
-        Logger.Log("Monitoring is now", Monitoring);
+        LocalMonitoring = Arguments.Include(args, "--local-monitoring");
+        Logger.Log("Local Monitoring is now", LocalMonitoring);
+
+        var remoteIsPassed = Arguments.Include(args, "--remote-monitoring");
+        Logger.Log("Remote Monitoring", remoteIsPassed);
+        
+        if (remoteIsPassed)
+        {
+            var remoteDevice = Arguments.GetStringValueResult(args, "--remote-monitoring");
+            if (!remoteDevice.Success)
+            {
+                Logger.Log("Remote Monitoring", remoteDevice.Message ?? string.Empty);
+                Terminal.WriteLineInRed(remoteDevice.Message);
+                Environment.Exit(0);
+            }
+
+            RemoteMonitoring = remoteDevice.Data;
+            Logger.Log("Remote Monitoring", RemoteMonitoring ?? string.Empty);
+        }
 
         var thresholdResult = Arguments.GetIntValueResult(args, "--threshold");
         if (thresholdResult is { Success: true, Data: not null })
@@ -115,7 +133,8 @@ Options are:
         var sensor = new HidUpsSensor(Logger);
         Data = sensor.Read(Port);
         Data.Store("Port", Port);
-        Data.Store("Monitoring", Monitoring);
+        Data.Store("LocalMonitoring", LocalMonitoring);
+        Data.Store("RemoteMonitoring", RemoteMonitoring ?? string.Empty);
         Data.Store("ShutdownThreshold", ShutdownThreshold);
         Data.Store("Status", ChargerStatus(Data));
         Logger.Log("Device Status is now", ChargerStatus(Data));
@@ -124,15 +143,17 @@ Options are:
 
     public void Monitor(Snapshot snapshot)
     {
-        Logger.Log("Monitoring Battery Level", Monitoring);
+        Logger.Log("Monitoring Battery Level", LocalMonitoring);
         Logger.Log("Battery Charge Level", $"{snapshot.Charge} < {snapshot.ShutdownThreshold}?");
-        if (Monitoring && !snapshot.AcPresent && snapshot.Charge < snapshot.ShutdownThreshold)
+        if (LocalMonitoring && !snapshot.AcPresent && snapshot.Charge < snapshot.ShutdownThreshold)
         {
             Logger.Log("Shutting down the local machine", string.Empty);
             var process = new Process();
             process.StartInfo.FileName = "shutdown";
-            process.StartInfo.Arguments = "-h now";
+            process.StartInfo.Arguments = "-P now";
             process.Start();
+            process.WaitForExit();
+            Logger.Log("Local device shutdown command returned", process.ExitCode);
         }
     }
 
@@ -147,6 +168,23 @@ Options are:
         {
             Logger.Log("Printing Out Table", snapshot);
             Output.WriteTable(snapshot);
+        }
+    }
+
+    public void RemoteMonitor(Snapshot snapshot)
+    {
+        Logger.Log("Monitoring Battery Level", RemoteMonitoring ?? string.Empty);
+        Logger.Log("Battery Charge Level", $"{snapshot.Charge} < {snapshot.ShutdownThreshold}?");
+        //if (RemoteMonitoring != string.Empty && !snapshot.AcPresent && snapshot.Charge < snapshot.ShutdownThreshold)
+        if (RemoteMonitoring != string.Empty && snapshot.Charge < snapshot.ShutdownThreshold)
+        {
+            Logger.Log($"Shutting down the remote machine {RemoteMonitoring}", string.Empty);
+            var process = new Process();
+            process.StartInfo.FileName = "sudo";
+            process.StartInfo.Arguments = @$"ssh ups@{RemoteMonitoring} -i /home/ups/.ssh/id_rsa -t ""sudo /usr/sbin/shutdown -P now""";
+            process.Start();
+            process.WaitForExit();
+            Logger.Log("Remote device shutdown command returned", process.ExitCode);
         }
     }
 }
