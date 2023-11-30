@@ -139,7 +139,7 @@ sudo sups --port /dev/usb/hiddev3 --local-monitoring --threshold 30
 
 
 
-The application assumes the following things, which we have to configure
+**The application assumes the following things, which we have to configure**
 
 - SSH connection to port 22. For now this cannot be changed. 
 Changing ssh port is a very fragile and thin security layer anyway. 
@@ -148,7 +148,7 @@ It's far better to use port 22 and treat it as a honeypot using fail2ban or crow
 - The key is at /home/ups/.ssh/id_rsa
 - The user "ups" is part of the sudoers and can execute shutdown without having to type a password
 
-### Remote Control Configuration Required
+### Detailed Configuration Required
 
 You should create the user on all machines that are expected to participate in UPS functionality
 
