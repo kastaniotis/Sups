@@ -175,8 +175,7 @@ Options are:
     {
         Logger.Log("Monitoring Battery Level", RemoteMonitoring ?? string.Empty);
         Logger.Log("Battery Charge Level", $"{snapshot.Charge} < {snapshot.ShutdownThreshold}?");
-        //if (RemoteMonitoring != string.Empty && !snapshot.AcPresent && snapshot.Charge < snapshot.ShutdownThreshold)
-        if (RemoteMonitoring != string.Empty && snapshot.Charge < snapshot.ShutdownThreshold)
+        if (RemoteMonitoring != string.Empty && !snapshot.AcPresent && snapshot.Charge < snapshot.ShutdownThreshold)
         {
             Logger.Log($"Shutting down the remote machine {RemoteMonitoring}", string.Empty);
             var process = new Process();
