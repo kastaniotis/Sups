@@ -273,7 +273,7 @@ https://eleccelerator.com/usbdescreqparser/
 ## TODO
 This is the feature list that I intend to include on v1
 
-- Add support for shutting down remote hosts. Linux or Windows.
+-
 
 ## Why C# and not C or C++ or whatever other fancy low level language?
 
