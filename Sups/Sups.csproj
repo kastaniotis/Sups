@@ -8,9 +8,9 @@
         <!--PublishSingleFile>true</PublishSingleFile-->
         <SelfContained>true</SelfContained>
         <PublishRelease>true</PublishRelease>
-        <PublishTrimmed>true</PublishTrimmed>
+        <!--PublishTrimmed>true</PublishTrimmed-->
         <PublishReadyToRun>true</PublishReadyToRun>
-        <PublishAot>true</PublishAot>
+        <!--PublishAot>true</PublishAot-->
         <LangVersion>12</LangVersion>
         <RootNamespace>Iconic.Sups</RootNamespace>
         <AssemblyName>sups</AssemblyName>
