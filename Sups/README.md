@@ -2,9 +2,12 @@
 
 sups (for simple ups) is a simple application to do quick queries on usb connected UPS devices that support the HID protocols.
 
-It is not meant as a replacement for APCUPSD or NUT. 
+It is not meant as a complete replacement for APCUPSD or NUT. 
 
-It is meant as an easy to maintain and use alternative that provides the most common functionality required by a UPS.
+It is meant as an easy to maintain and use alternative that provides the most common functionality required by a UPS. This includes
+
+- Query for basic battery and AC power presence information
+- Allow shutting down local or remote machines based on battery charge levels.
 
 ## Installation
 
