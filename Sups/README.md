@@ -171,7 +171,7 @@ ssh-keygen -t rsa
 ssh-copy-id -i /home/ups/.ssh/id_rsa.pub ups@192.168.2.105
 ```
 
-And finally, on all target machines, we have to allow the user "ups" to call shutdown with having to type a password
+And finally, on all target machines, we have to allow the user "ups" to call shutdown without having to type a password
 
 ```bash
 # Use visudo to edit sudo permissions
