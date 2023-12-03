@@ -15,7 +15,7 @@ sudo ./sups --port /dev/usb/hiddev1
 If you want to shutdown the local machine below a certain battery level, you can use the --local-monitoring argument. The default threshold is 50% as this is the minimum safe level for cheap lead acid batteries. But you can also define your own threshold using the argument --threshold and passing the percentage. Like
 
 ```bash
-sudo sups --monitoring --threshold 30
+sudo sups --local-monitoring --threshold 30
 ```
 
 It is not meant as a complete replacement for APCUPSD or NUT (or the vendor provided software)
