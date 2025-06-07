@@ -20,20 +20,22 @@ public static class Output
     }
 
 
-    public static void WriteJson(Snapshot snapshot)
+    public static string WriteJson(Snapshot snapshot)
     {
-        System.Console.WriteLine($$"""
-                                   {
-                                       "Date": "{{DateTime.Now:s}}",
-                                       "Port": "{{snapshot.Port}}",
-                                       "Charge": {{snapshot.Charge}},
-                                       "ACPresent": {{snapshot.AcPresent.ToString().ToLower()}},
-                                       "Time": {{snapshot.Time}},
-                                       "ChargerStatus": "{{snapshot.ChargerStatus}}",
-                                       "ShutdownThreshold": {{snapshot.ShutdownThreshold}},
-                                       "Monitoring": {{snapshot.LocalMonitoring.ToString().ToLower()}}
-                                       "RemoteMonitoring": "{{snapshot.RemoteMonitoring}}"
-                                   }
-                                   """);
+        var output = $$"""
+                       {
+                           "Date": "{{DateTime.Now:s}}",
+                           "Port": "{{snapshot.Port}}",
+                           "Charge": {{snapshot.Charge}},
+                           "ACPresent": {{snapshot.AcPresent.ToString().ToLower()}},
+                           "Time": {{snapshot.Time}},
+                           "ChargerStatus": "{{snapshot.ChargerStatus}}",
+                           "ShutdownThreshold": {{snapshot.ShutdownThreshold}},
+                           "Monitoring": {{snapshot.LocalMonitoring.ToString().ToLower()}},
+                           "RemoteMonitoring": "{{snapshot.RemoteMonitoring}}"
+                       }
+                       """;
+        System.Console.WriteLine(output);
+        return output;
     }
 }

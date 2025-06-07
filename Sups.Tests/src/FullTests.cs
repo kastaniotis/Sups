@@ -1,3 +1,4 @@
+using System.Text.Json.Nodes;
 using Iconic.Sups;
 using Iconic.Sups.HID;
 
@@ -75,5 +76,9 @@ public class Tests
         snapshot.Store("Monitoring", true);
         
         Assert.That(snapshot.IsComplete(), Is.EqualTo(true));
+        
+        var json = Output.WriteJson(snapshot);
+        
+        var encoded = JsonNode.Parse(json);
     }
 }
