@@ -3,10 +3,10 @@ namespace Iconic.Sups.HID;
 public struct HidBatteryUsages
 {
     // https://www.usb.org/sites/default/files/hut1_4.pdf#page=376
-    private const string Battery = "85";
-    private const string RemainingTimeLimit = "2A";
-    private const string BelowRemainingCapacityLimit = "42";
-    private const string RemainingTimeLimitExpired = "43";
+    // private const string Battery = "85";
+    // private const string RemainingTimeLimit = "2A";
+    // private const string BelowRemainingCapacityLimit = "42";
+    // private const string RemainingTimeLimitExpired = "43";
     public const string IgnoredText = "Ignored";
 
     private const string Charging = "44";

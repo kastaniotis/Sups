@@ -77,8 +77,11 @@ public class Tests
         
         Assert.That(snapshot.IsComplete(), Is.EqualTo(true));
         
-        var json = Output.WriteJson(snapshot);
+        var prettyjson = Output.WritePrettyJson(snapshot);
         
-        var encoded = JsonNode.Parse(json);
+        var encoded = JsonNode.Parse(prettyjson);
+        
+        var json = Output.WriteJson(snapshot);
+        var encodedJson = JsonNode.Parse(json);
     }
 }

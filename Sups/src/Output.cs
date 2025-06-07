@@ -20,7 +20,7 @@ public static class Output
     }
 
 
-    public static string WriteJson(Snapshot snapshot)
+    public static string WritePrettyJson(Snapshot snapshot)
     {
         var output = $$"""
                        {
@@ -35,6 +35,16 @@ public static class Output
                            "RemoteMonitoring": "{{snapshot.RemoteMonitoring}}"
                        }
                        """;
+        System.Console.WriteLine(output);
+        return output;
+    }
+
+    public static string WriteJson(Snapshot snapshot)
+    {
+        var output = 
+$$"""
+{"Date":"{{DateTime.Now:s}}","Port":"{{snapshot.Port}}","Charge":{{snapshot.Charge}},"ACPresent":{{snapshot.AcPresent.ToString().ToLower()}},"Time":{{snapshot.Time}},"ChargerStatus":"{{snapshot.ChargerStatus}}","ShutdownThreshold":{{snapshot.ShutdownThreshold}},"Monitoring":{{snapshot.LocalMonitoring.ToString().ToLower()}},"RemoteMonitoring":"{{snapshot.RemoteMonitoring}}"}
+""";
         System.Console.WriteLine(output);
         return output;
     }

@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e  # Exit on error
+set -e  # Exit on any error
 
 APP_NAME="sups"
 OUTPUT_DIR="./public"
@@ -12,7 +12,6 @@ CONFIGS["linux-x64"]="-p:PublishAot=true"
 CONFIGS["linux-arm64"]="-p:PublishAot=true"
 CONFIGS["linux-arm"]="-p:PublishSingleFile=true"
 
-# Matching objcopy tools for each target
 OBJCOPIES["linux-x64"]="objcopy"
 OBJCOPIES["linux-arm64"]="aarch64-linux-gnu-objcopy"
 OBJCOPIES["linux-arm"]="arm-linux-gnueabihf-objcopy"
@@ -22,15 +21,14 @@ for RID in "linux-x64" "linux-arm64" "linux-arm"; do
   
   ARCH=${RID#linux-}
   OUT_PATH="$OUTPUT_DIR/$ARCH"
-  
+  OUTPUT_FILE="${APP_NAME}-${ARCH}.tar.gz"
+
   mkdir -p "$OUT_PATH"
 
-  # Export the correct objcopy if needed
+  # Set and validate objcopy
   export OBJCOPY=${OBJCOPIES[$RID]}
-
-  # Warn if the objcopy tool is not found
   if ! command -v "$OBJCOPY" &>/dev/null; then
-    echo "❌ Error: Required objcopy tool '$OBJCOPY' not found. Please install it (e.g., 'sudo apt install binutils-${OBJCOPY%-*}')"
+    echo "❌ Error: Required objcopy tool '$OBJCOPY' not found. Please install it."
     exit 1
   fi
 
@@ -42,8 +40,8 @@ for RID in "linux-x64" "linux-arm64" "linux-arm"; do
 
   echo "✅ Build complete: $RID"
 
-  echo "📦 Packaging ${APP_NAME} for $ARCH..."
-  tar -czvf "$OUT_PATH/${APP_NAME}.tar.gz" -C "$OUT_PATH" "$APP_NAME"
+  echo "📦 Packaging $APP_NAME as $OUTPUT_FILE"
+  tar -czvf "$OUT_PATH/$OUTPUT_FILE" -C "$OUT_PATH" "$APP_NAME"
 done
 
 echo -e "\n🎉 All builds completed successfully."

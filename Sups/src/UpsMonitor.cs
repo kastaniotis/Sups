@@ -10,6 +10,7 @@ public class UpsMonitor
     private bool Debug { get; set; }
     private ILoggingService Logger { get; set; }
     private bool Json { get; }
+    private bool PrettyJson { get; }
     private string Port { get; } = "";
     private bool LocalMonitoring { get; }
     private string? RemoteMonitoring { get; }
@@ -33,7 +34,8 @@ The UPS device must by HID compliant
 Options are:
 --help                  for this text 
 --debug                 to see low level info about receiving and parsing HID UPS data 
---json                  to get results in json format.
+--json                  to get results in json format
+--pretty-json           to get results in a multiline format
 --port /dev/usb/hiddev0 to connect to a custom port
 --monitoring            to enable shutting down the local machine if charge goes below the threshold (default 50%)
 --threshold 30          to define a custom shutdown threshold (in %)
@@ -43,6 +45,8 @@ Options are:
 
         Json = Arguments.Include(args, "--json");
         Logger.Log("Json is now", Json);
+        PrettyJson = Arguments.Include(args, "--pretty-json");
+        Logger.Log("PrettyJson is now", PrettyJson);
 
         // If no port defined, we scan
         if (!Arguments.Include(args, "--port"))
@@ -163,6 +167,11 @@ Options are:
         {
             Logger.Log("Printing Out Json", snapshot);
             Output.WriteJson(snapshot);
+        }
+        else if (PrettyJson)
+        {
+            Logger.Log("Printing Out Pretty Json", snapshot);
+            Output.WritePrettyJson(snapshot);
         }
         else
         {
